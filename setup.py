@@ -8,7 +8,7 @@ import numpy as np
 # setuptools DWIM monkey-patch madness
 # http://mail.python.org/pipermail/distutils-sig/2007-September/thread.html#8204
 import sys
-from pygsw import version
+
 if 'setuptools.extension' in sys.modules:
     m = sys.modules['setuptools.extension']
     m.Extension.__dict__ = m._Extension.__dict__
@@ -26,7 +26,7 @@ Topic :: Education
 Topic :: Software Development :: Libraries :: Python Modules
 '''
 setup(name = 'pygsw', 
-        vesrion=version,
+        vesrion='0.0.1',
         description='Python bindings for the TEOS-10 V3.0 GSW Oceanographic Toolbox in C',
         long_description=open('README.md').read(),
         license=open('LICENSE.txt').read(),

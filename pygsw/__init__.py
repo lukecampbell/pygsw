@@ -1,3 +1,4 @@
+from version import version as __version__
 from seawater import alpha_wrt_t_exact
 from seawater import pot_rho_t_exact
 from seawater import kappa_t_exact
