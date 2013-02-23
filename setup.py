@@ -15,18 +15,16 @@ if 'setuptools.extension' in sys.modules:
 gsw_extension = Extension("pygsw.seawater", ["pygsw/seawater.pyx"], include_dirs=[np.get_include()], libraries=['gswteos-10'] )
 
 
-classifiers = '''
-Intended Audience :: Science/Research
+classifiers = ''' Intended Audience :: Science/Research
 Intended Audience :: Developers
 Intended Audience :: Education
 Operating System :: OS Independent
 Programming Language :: Python
 Topic :: Scientific/Engineering
 Topic :: Education
-Topic :: Software Development :: Libraries :: Python Modules
-'''
+Topic :: Software Development :: Libraries :: Python Modules'''
 setup(name = 'pygsw', 
-        vesrion='0.0.1',
+        version='0.0.1',
         description='Python bindings for the TEOS-10 V3.0 GSW Oceanographic Toolbox in C',
         long_description=open('README.md').read(),
         license=open('LICENSE.txt').read(),
