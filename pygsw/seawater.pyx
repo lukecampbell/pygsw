@@ -606,86 +606,249 @@ def sa_from_sp_baltic(double sp, double lon, double lat):
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def sa_from_sp(double sp, double p, double lon, double lat):
+    '''
+    ! Calculates Absolute Salinity, SA, from Practical Salinity, SP
+    !
+    ! sp     : Practical Salinity                              [unitless]
+    ! p      : sea pressure                                    [dbar]
+    ! lon   : longitude                                       [DEG E]     
+    ! lat    : latitude                                        [DEG N]
+    !
+    ! gsw_sa_from_sp   : Absolute Salinity                     [g/kg]
+    '''    
     return gsw_sa_from_sp(sp,p,lon,lat)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def sa_from_sstar(double sstar, double p,double lon,double lat):
+    '''
+    ! Calculates Absolute Salinity, SA, from Preformed Salinity, Sstar.
+    !
+    ! Sstar  : Preformed Salinity                              [g/kg]
+    ! p      : sea pressure                                    [dbar]
+    ! lon   : longitude                                       [deg E]     
+    ! lat    : latitude                                        [deg N]
+    !
+    ! gsw_sa_from_sstar   : Absolute Salinity                  [g/kg]
+    '''    
     return gsw_sa_from_sstar(sstar, p, lon, lat)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def sound_speed(double sa, double ct, double p):
+    '''
+    !  Calculates sound speed of seawater using the computationally-
+    !  efficient 48-term expression for density in terms of SA, CT and p
+    !  (McDougall et al., 2011)
+    !
+    ! sa     : Absolute Salinity                               [g/kg]
+    ! ct     : Conservative Temperature                        [deg C]
+    ! p      : sea pressure                                    [dbar]
+    '''    
     return gsw_sound_speed(sa,ct,p)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def sound_speed_t_exact(double sa, double t, double p):
+    '''
+    ! Calculates the sound speed of seawater
+    !
+    ! sa     : Absolute Salinity                               [g/kg]
+    ! t      : in-situ temperature                             [deg C]
+    ! p      : sea pressure                                    [dbar]
+    ! 
+    ! gsw_sound_speed_t_exact : sound speed                    [m/s]
+    '''    
     return gsw_sound_speed_t_exact(sa,t,p)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def specvol_anom(double sa, double ct, double p):
+    '''
+    !  Calculates specific volume anomaly of seawater using the computationally-
+    !  efficient 48-term expression for density in terms of SA, CT and p
+    !  (McDougall et al., 2011)
+    !
+    ! sa     : Absolute Salinity                               [g/kg]
+    ! ct     : Conservative Temperature                        [deg C]
+    ! p      : sea pressure                                    [dbar]
+    ! 
+    ! gsw_specvol_anom  :  specific volume anomaly of seawater (48 term equation)
+    '''    
     return gsw_specvol_anom(sa,ct,p)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def specvol(double sa, double ct, double p):
+    '''
+    !  Calculates specific volume of seawater using the computationally-
+    !  efficient 48-term expression for density in terms of SA, CT and p
+    !  (McDougall et al., 2011)
+    !
+    ! sa     : Absolute Salinity                               [g/kg]
+    ! ct     : Conservative Temperature                        [deg C]
+    ! p      : sea pressure                                    [dbar]
+    ! 
+    ! gsw_specvol  :  specific volume of seawater (48 term equation)
+    '''    
     return gsw_specvol(sa,ct,p)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def specvol_sso_0_p(double p):
+    '''
+    !  This function calculates specifc volume at the Standard Ocean Salinty,
+    !  SSO, and at a Conservative Temperature of zero degrees C, as a function 
+    !  of pressure, p, in dbar, using a streamlined version of the 48-term CT
+    !  version of specific volume, that is, a streamlined version of the code
+    !  "gsw_specvol(SA,CT,p)".
+    !
+    ! p      : sea pressure                                    [dbar]
+    ! 							     3   -1
+    ! gsw_specvol_sso_0_p : specvol(sso,0,p)		   [m  kg  ]
+    '''    
     return gsw_specvol_sso_0_p(p)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def specvol_t_exact(double sa, double t, double p):
+    '''
+    ! Calculates the specific volume of seawater
+    !
+    ! sa     : Absolute Salinity                               [g/kg]
+    ! t      : in-situ temperature                             [deg C]
+    ! p      : sea pressure                                    [dbar]
+    ! 
+    ! gsw_specvol_t_exact : specific volume                    [kg/m^3]
+    '''    
     return gsw_specvol_t_exact(sa,t,p)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def sp_from_sa_baltic(double sa, double lon, double lat):
+    '''
+    ! For the Baltic Sea, calculates Practical Salinity with a value
+    ! computed analytically from Absolute Salinity
+    !
+    ! sa     : Absolute Salinity                               [g/kg]
+    ! lon   : longitude                                       [deg E]     
+    ! lat    : latitude                                        [deg N]
+    ! p      : sea pressure                                    [dbar]
+    !
+    ! gsw_sp_from_sa_baltic  : Practical Salinity              [unitless]
+    '''    
     return gsw_sp_from_sa_baltic(sa,lon,lat)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def sp_from_sa(double sa, double p, double lon, double lat):
+    '''
+    ! Calculates Practical salinity, sp, from Absolute salinity, sa  
+    !
+    ! sa     : Absolute Salinity                               [g/kg]
+    ! p      : sea pressure                                    [dbar]
+    ! lon   : longitude                                       [DEG E]     
+    ! lat    : latitude                                        [DEG N]
+    !
+    ! gsw_sp_from_sa      : Practical Salinity                 [unitless]
+    '''    
     return gsw_sp_from_sa(sa,p,lon,lat)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def sp_from_sr(double sr):
+    '''
+    ! Calculates Practical Salinity, sp, from Reference Salinity, sr. 
+    !
+    ! sr     : Reference Salinity                              [g/kg]
+    !
+    ! gsw_sp_from_sr  : Practical Salinity                     [unitless]
+    '''    
     return gsw_sp_from_sr(sr)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def sp_from_sstar(double sstar, double p,double lon,double lat):
+    '''
+    ! Calculates Practical Salinity, SP, from Preformed Salinity, Sstar. 
+    !
+    ! sstar  : Preformed Salinity                              [g/kg]
+    ! p      : sea pressure                                    [dbar]
+    ! lon   : longitude                                       [deg E]     
+    ! lat    : latitude                                        [deg N]
+    !
+    ! gsw_sp_from_Sstar : Preformed Salinity                   [g/kg]
+    '''    
     return gsw_sp_from_sstar(sstar,p,lon,lat)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def sr_from_sp(double sp):
+    '''
+    ! Calculates Reference Salinity, SR, from Practical Salinity, SP. 
+    !
+    ! sp     : Practical Salinity                              [unitless]
+    !
+    ! gsw_sr_from_sp : Reference Salinity                      [g/kg]
+    '''    
     return gsw_sr_from_sp(sp)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def sstar_from_sa(double sa, double p, double lon, double lat):
+    '''
+    ! Calculates Preformed Salinity, Sstar, from Absolute Salinity, SA. 
+    !
+    ! sa     : Absolute Salinity                               [g/kg]
+    ! p      : sea pressure                                    [dbar]
+    ! lon   : longitude                                       [deg E]     
+    ! lat    : latitude                                        [deg N]
+    !
+    ! gsw_sstar_from_sa : Preformed Salinity                   [g/kg]
+    '''    
     return gsw_sstar_from_sa(sa,p,lon,lat)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def sstar_from_sp(double sp, double p, double lon, double lat):
+    '''
+    ! Calculates Preformed Salinity, Sstar, from Practical Salinity, SP. 
+    !
+    ! sp     : Practical Salinity                              [unitless]
+    ! p      : sea pressure                                    [dbar]
+    ! lon   : longitude                                       [deg E]     
+    ! lat    : latitude                                        [deg N]
+    !
+    ! gsw_sstar_from_sp  : Preformed Salinity                  [g/kg]
+    '''    
     return gsw_sstar_from_sp(sp,p,lon,lat)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def t_freezing(double sa, double p, double saturation_fraction):
+    '''
+    ! Calculates the in-situ temperature at which of seawater freezes 
+    ! from Absolute Salinity and pressure.
+    !
+    ! sa     : Absolute Salinity                                 [g/kg]
+    ! p      : sea pressure                                      [dbar]
+    ! saturation_fraction : saturation fraction
+    !
+    ! gsw_t_freezing : in-situ temperature freezing point  [deg C]
+    '''    
     return gsw_t_freezing(sa,p,saturation_fraction)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def t_from_ct(double sa, double ct, double p):
+    '''
+    ! Calculates in-situ temperature from Conservative Temperature of seawater  
+    !
+    ! sa      : Absolute Salinity                              [g/kg]
+    ! ct      : Conservative Temperature                       [deg C]
+    !
+    ! gsw_t_from_ct : in-situ temperature                      [deg C]
+    '''    
     return gsw_t_from_ct(sa,ct,p)
 
 
