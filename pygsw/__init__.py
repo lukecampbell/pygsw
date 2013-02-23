@@ -7,7 +7,6 @@ from seawater import saar
 from seawater import ct_from_pt
 from seawater import latentheat_evap_ct
 from seawater import hill_ratio_at_sp2
-from seawater import __name__
 from seawater import internal_energy
 from seawater import sound_speed_t_exact
 from seawater import pt0_from_t
@@ -22,7 +21,6 @@ from seawater import dynamic_enthalpy
 from seawater import beta_const_t_exact
 from seawater import gibbs
 from seawater import ct_freezing
-from seawater import np
 from seawater import sr_from_sp
 from seawater import enthalpy_t_exact
 from seawater import sstar_from_sa
@@ -42,7 +40,6 @@ from seawater import fdelta
 from seawater import sstar_from_sp
 from seawater import latentheat_evap_t
 from seawater import t_from_ct
-from seawater import add_barrier
 from seawater import pt_from_t
 from seawater import ct_from_t
 from seawater import deltasa_from_sp
@@ -50,7 +47,6 @@ from seawater import entropy_t_exact
 from seawater import enthalpy
 from seawater import t_freezing
 from seawater import entropy_part_zerop
-from seawater import add_mean
 from seawater import specvol_t_exact
 from seawater import sp_from_sstar
 

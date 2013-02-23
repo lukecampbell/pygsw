@@ -68,63 +68,12 @@ cdef extern from "gswteos-10.h":
 
 
 
-@cython.boundscheck(False)
-@cython.wraparound(False)
-def add_barrier(np.ndarray input_data, double lon, double lat, double long_grid, double lat_grid, double dlong_grid, double dlat_grid):
-    '''
-    !  Adds a barrier through Central America (Panama) and then averages
-    !  over the appropriate side of the barrier
-    ! 
-    !  input_data   :  data                                         [unitless]
-    !  lon          :  Longitudes of data degrees east              [0 ... +360]
-    !  lat          :  Latitudes of data degrees north              [-90 ... +90]
-    !  longs_grid   :  Longitudes of regular grid degrees east      [0 ... +360]
-    !  lats_grid    :  Latitudes of regular grid degrees north      [-90 ... +90]
-    !  dlongs_grid  :  Longitude difference of regular grid degrees [deg longitude]
-    !  dlats_grid   :  Latitude difference of regular grid degrees  [deg latitude]
-    !
-    ! gsw_add_barrier  : average of data depending on which side of the 
-    !                    Panama cannal it is on                                 [unitless]
-    '''
-
-    if input_data.ndim != 1:
-        raise TypeError('Incorrect number of dimensions. (1!=%s)'%input_data.ndim)
-    if input_data.shape[0] != 4:
-        raise TypeError('Invalid shape: expecting (4,) got (%s)' % input_data.shape[0])
-
-    cdef np.ndarray[np.double_t, ndim=1, mode='c'] input = np.ascontiguousarray(input_data, dtype=np.double)
-    cdef np.ndarray[np.double_t, ndim=1, mode='c'] retval = np.empty((4,))
-
-    gsw_add_barrier(&input[0], lon, lat, long_grid, lat_grid, dlong_grid, dlat_grid, &retval[0])
-    return retval
-
-@cython.boundscheck(False)
-@cython.wraparound(False)
-def add_mean(np.ndarray input_data, double lon, double lat):
-    '''
-    ! Replaces NaN's with non-nan mean of the 4 adjacent neighbours
-    !
-    ! data_in   : data set of the 4 adjacent neighbours   
-    ! lon      : longitude
-    ! lat       : latitude
-    !
-    ! data_out : non-nan mean of the 4 adjacent neighbours     [unitless]
-    '''
-    if input_data.ndim != 1:
-        raise TypeError('Incorrect number of dimensions. (1!=%s)'%input_data.ndim)
-    if input_data.shape[0] != 4:
-        raise TypeError('Invalid shape: expecting (4,) got (%s)' % input_data.shape[0])
-    cdef np.ndarray[np.double_t, ndim=1, mode='c'] input = np.ascontiguousarray(input_data, dtype=np.double)
-    cdef np.ndarray[np.double_t, ndim=1, mode='c'] retval = np.empty((4,))
-    gsw_add_mean(&input[0], lon, lat, &retval[0])
-    return retval
-
-
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def alpha(double sa, double ct, double p):
     '''
+def alpha(double sa, double ct, double p):
     !  Calculates the thermal expansion coefficient of seawater with respect to 
     !  Conservative Temperature using the computationally-efficient 48-term 
     !  expression for density in terms of SA, CT and p (McDougall et al., 2011)
@@ -141,6 +90,7 @@ def alpha(double sa, double ct, double p):
 @cython.wraparound(False)
 def alpha_wrt_t_exact(double sa, double t, double p):
     '''
+def alpha_wrt_t_exact(double sa, double t, double p):
     ! Calculates thermal expansion coefficient of seawater with respect to 
     ! in-situ temperature
     !
@@ -157,6 +107,7 @@ def alpha_wrt_t_exact(double sa, double t, double p):
 @cython.wraparound(False)
 def beta_const_t_exact(double sa, double t, double p):
     '''
+def beta_const_t_exact(double sa, double t, double p):
     ! Calculates saline (haline) contraction coefficient of seawater at 
     ! constant in-situ temperature.
     !
@@ -172,6 +123,7 @@ def beta_const_t_exact(double sa, double t, double p):
 @cython.wraparound(False)
 def beta(double sa, double ct, double p):
     '''
+def beta(double sa, double ct, double p):
     ! Calculates saline (haline) contraction coefficient of seawater at 
     ! constant in-situ temperature.
     !
@@ -187,6 +139,7 @@ def beta(double sa, double ct, double p):
 @cython.wraparound(False)
 def cp_t_exact(double sa, double t, double p):
     '''
+def cp_t_exact(double sa, double t, double p):
     ! Calculates isobaric heat capacity of seawater
     !
     ! sa     : Absolute Salinity                               [g/kg]
@@ -201,6 +154,7 @@ def cp_t_exact(double sa, double t, double p):
 @cython.wraparound(False)
 def ct_freezing(double sa, double p, double saturation_fraction):
     '''
+def ct_freezing(double sa, double p, double saturation_fraction):
     ! Calculates the Conservative Temperature at which of seawater freezes 
     ! from Absolute Salinity and pressure.
     !
@@ -216,6 +170,7 @@ def ct_freezing(double sa, double p, double saturation_fraction):
 @cython.wraparound(False)
 def ct_from_pt(double sa, double pt):
     '''
+def ct_from_pt(double sa, double pt):
     ! Calculates Conservative Temperature from potential temperature of seawater  
     !
     ! sa      : Absolute Salinity                              [g/kg]
@@ -230,6 +185,7 @@ def ct_from_pt(double sa, double pt):
 @cython.wraparound(False)
 def ct_from_t(double sa, double t, double p):
     '''
+def ct_from_t(double sa, double t, double p):
     ! Calculates Conservative Temperature from in-situ temperature
     !
     ! sa     : Absolute Salinity                               [g/kg]
@@ -244,6 +200,7 @@ def ct_from_t(double sa, double t, double p):
 @cython.wraparound(False)
 def deltasa_from_sp(double sp, double p, double lon, double lat):
     '''
+def deltasa_from_sp(double sp, double p, double lon, double lat):
     ! Calculates Absolute Salinity Anomaly, deltaSA, from Practical Salinity, SP. 
     !
     ! sp     : Practical Salinity                              [unitless]
@@ -259,6 +216,7 @@ def deltasa_from_sp(double sp, double p, double lon, double lat):
 @cython.wraparound(False)
 def delta_sa_ref(double p, double lon, double lat):
     '''
+def delta_sa_ref(double p, double lon, double lat):
     ! Calculates the Absolute Salinity Anomaly reference value, delta_SA_ref.
     !
     ! p      : sea pressure                                    [dbar]
@@ -273,6 +231,7 @@ def delta_sa_ref(double p, double lon, double lat):
 @cython.wraparound(False)
 def dynamic_enthalpy(double sa, double ct, double p):
     '''
+def dynamic_enthalpy(double sa, double ct, double p):
     !  Calculates dynamic enthalpy of seawater using the computationally-
     !  efficient 48-term expression for density in terms of SA, CT and p
     !  (McDougall et al., 2011)
@@ -289,6 +248,7 @@ def dynamic_enthalpy(double sa, double ct, double p):
 @cython.wraparound(False)
 def enthalpy(double sa, double ct, double p):
     '''
+def enthalpy(double sa, double ct, double p):
     !  Calculates specific enthalpy of seawater using the computationally-
     !  efficient 48-term expression for density in terms of SA, CT and p
     !  (McDougall et al., 2011)
@@ -305,6 +265,7 @@ def enthalpy(double sa, double ct, double p):
 @cython.wraparound(False)
 def enthalpy_t_exact(double sa, double t, double p):
     '''
+def enthalpy_t_exact(double sa, double t, double p):
     ! Calculates the specific enthalpy of seawater
     !
     ! sa     : Absolute Salinity                               [g/kg]
@@ -319,6 +280,7 @@ def enthalpy_t_exact(double sa, double t, double p):
 @cython.wraparound(False)
 def entropy_part(double sa, double t, double p):
     '''
+def entropy_part(double sa, double t, double p):
     ! entropy minus the terms that are a function of only SA
     !
     ! sa     : Absolute Salinity                               [g/kg]
@@ -333,6 +295,7 @@ def entropy_part(double sa, double t, double p):
 @cython.wraparound(False)
 def entropy_part_zerop(double sa, double pt0):
     '''
+def entropy_part_zerop(double sa, double pt0):
     ! entropy part evaluated at the sea surface
     !
     ! sa     : Absolute Salinity                               [g/kg]
@@ -346,6 +309,7 @@ def entropy_part_zerop(double sa, double pt0):
 @cython.wraparound(False)
 def entropy_t_exact(double sa, double t, double p):
     '''
+def entropy_t_exact(double sa, double t, double p):
     ! Calculates the specific entropy of seawater
     !
     ! sa     : Absolute Salinity                               [g/kg]
@@ -360,6 +324,7 @@ def entropy_t_exact(double sa, double t, double p):
 @cython.wraparound(False)
 def fdelta(double p, double lon, double lat):
     '''
+def fdelta(double p, double lon, double lat):
     ! Calculates fdelta. 
     !
     ! sp     : Practical Salinity                              [unitless]
@@ -375,6 +340,7 @@ def fdelta(double p, double lon, double lat):
 @cython.wraparound(False)
 def gibbs(int ns, int nt, int np_, double sa, double t, double p):
     '''
+def gibbs(int ns, int nt, int np_, double sa, double t, double p):
     ! seawater specific Gibbs free energy and derivatives up to order 2
     !
     ! ns     : order of s derivative
@@ -392,6 +358,7 @@ def gibbs(int ns, int nt, int np_, double sa, double t, double p):
 @cython.wraparound(False)
 def gibbs_pt0_pt0(double sa, double pt0):
     '''
+def gibbs_pt0_pt0(double sa, double pt0):
     ! gibbs_tt at (sa,pt,0)
     !
     ! sa     : Absolute Salinity                            [g/kg]
@@ -405,6 +372,7 @@ def gibbs_pt0_pt0(double sa, double pt0):
 @cython.wraparound(False)
 def hill_ratio_at_sp2(double t):
     '''
+def hill_ratio_at_sp2(double t):
     !  Calculates the Hill ratio, which is the adjustment needed to apply for
     !  Practical Salinities smaller than 2.  This ratio is defined at a 
     !  Practical Salinity = 2 and in-situ temperature, t using PSS-78. The Hill
@@ -418,6 +386,7 @@ def hill_ratio_at_sp2(double t):
 @cython.wraparound(False)
 def internal_energy(double sa, double ct, double p):
     '''
+def internal_energy(double sa, double ct, double p):
     !  Calculates internal energy of seawater using the computationally
     !  efficient 48-term expression for density in terms of SA, CT and p
     !  (McDougall et al., 2011)
@@ -434,6 +403,7 @@ def internal_energy(double sa, double ct, double p):
 @cython.wraparound(False)
 def kappa_t_exact(double sa, double t, double p):
     '''
+def kappa_t_exact(double sa, double t, double p):
     ! isentropic compressibility of seawater
     !
     ! sa     : Absolute Salinity                               [g/kg]
@@ -448,6 +418,7 @@ def kappa_t_exact(double sa, double t, double p):
 @cython.wraparound(False)
 def latentheat_evap_ct(double sa, double ct):
     '''
+def latentheat_evap_ct(double sa, double ct):
     ! Calculates latent heat, or enthalpy, of evaporation.
     !
     ! sa     : Absolute Salinity                               [g/kg]
@@ -461,6 +432,7 @@ def latentheat_evap_ct(double sa, double ct):
 @cython.wraparound(False)
 def latentheat_evap_t(double sa, double t):
     '''
+def latentheat_evap_t(double sa, double t):
     ! Calculates latent heat, or enthalpy, of evaporation.
     !
     ! sa     : Absolute Salinity                               [g/kg]
@@ -474,6 +446,7 @@ def latentheat_evap_t(double sa, double t):
 @cython.wraparound(False)
 def latentheat_melting(double sa, double p):
     '''
+def latentheat_melting(double sa, double p):
     ! Calculates latent heat, or enthalpy, of melting.
     !
     ! sa     : Absolute Salinity                               [g/kg]
@@ -487,6 +460,7 @@ def latentheat_melting(double sa, double p):
 @cython.wraparound(False)
 def pot_rho_t_exact(double sa, double t, double p, double p_ref):
     '''
+def pot_rho_t_exact(double sa, double t, double p, double p_ref):
     ! Calculates the potential density of seawater
     !
     ! sa     : Absolute Salinity                               [g/kg]
@@ -502,6 +476,7 @@ def pot_rho_t_exact(double sa, double t, double p, double p_ref):
 @cython.wraparound(False)
 def pt0_from_t(double sa, double t, double p):
     '''
+def pt0_from_t(double sa, double t, double p):
     ! Calculates potential temperature with reference pressure, p_ref = 0 dbar. 
     !
     ! sa     : Absolute Salinity                               [g/kg]
@@ -516,6 +491,7 @@ def pt0_from_t(double sa, double t, double p):
 @cython.wraparound(False)
 def pt_from_ct(double sa, double ct):
     '''
+def pt_from_ct(double sa, double ct):
     ! potential temperature of seawater from conservative temperature
     !
     ! sa     : Absolute Salinity                               [g/kg]
@@ -531,6 +507,7 @@ def pt_from_ct(double sa, double ct):
 @cython.wraparound(False)
 def pt_from_t(double sa, double t, double p, double p_ref):
     '''
+def pt_from_t(double sa, double t, double p, double p_ref):
     ! Calculates potential temperature of seawater from in-situ temperature 
     !
     ! sa     : Absolute Salinity                               [g/kg]
@@ -546,6 +523,7 @@ def pt_from_t(double sa, double t, double p, double p_ref):
 @cython.wraparound(False)
 def rho(double sa, double ct, double p):
     '''
+def rho(double sa, double ct, double p):
     !  Calculates in-situ density from Absolute Salinity and Conservative 
     !  Temperature, using the computationally-efficient 48-term expression for
     !  density in terms of SA, CT and p (McDougall et al., 2011).
@@ -562,6 +540,7 @@ def rho(double sa, double ct, double p):
 @cython.wraparound(False)
 def rho_t_exact(double sa, double t, double p):
     '''
+def rho_t_exact(double sa, double t, double p):
     ! Calculates in-situ density of seawater from Absolute Salinity and 
     ! in-situ temperature.
     !
@@ -577,6 +556,7 @@ def rho_t_exact(double sa, double t, double p):
 @cython.wraparound(False)
 def saar(double p, double lon, double lat):
     '''
+def saar(double p, double lon, double lat):
     ! Calculates the Absolute Salinity Anomaly Ratio, SAAR.
     !
     ! p      : sea pressure                                    [dbar]
@@ -591,6 +571,7 @@ def saar(double p, double lon, double lat):
 @cython.wraparound(False)
 def sa_from_sp_baltic(double sp, double lon, double lat):
     '''
+def sa_from_sp_baltic(double sp, double lon, double lat):
     ! For the Baltic Sea, calculates Absolute Salinity with a value
     ! computed analytically from Practical Salinity
     !
@@ -607,6 +588,7 @@ def sa_from_sp_baltic(double sp, double lon, double lat):
 @cython.wraparound(False)
 def sa_from_sp(double sp, double p, double lon, double lat):
     '''
+def sa_from_sp(double sp, double p, double lon, double lat):
     ! Calculates Absolute Salinity, SA, from Practical Salinity, SP
     !
     ! sp     : Practical Salinity                              [unitless]
@@ -622,6 +604,7 @@ def sa_from_sp(double sp, double p, double lon, double lat):
 @cython.wraparound(False)
 def sa_from_sstar(double sstar, double p,double lon,double lat):
     '''
+def sa_from_sstar(double sstar, double p,double lon,double lat):
     ! Calculates Absolute Salinity, SA, from Preformed Salinity, Sstar.
     !
     ! Sstar  : Preformed Salinity                              [g/kg]
@@ -637,6 +620,7 @@ def sa_from_sstar(double sstar, double p,double lon,double lat):
 @cython.wraparound(False)
 def sound_speed(double sa, double ct, double p):
     '''
+def sound_speed(double sa, double ct, double p):
     !  Calculates sound speed of seawater using the computationally-
     !  efficient 48-term expression for density in terms of SA, CT and p
     !  (McDougall et al., 2011)
@@ -651,6 +635,7 @@ def sound_speed(double sa, double ct, double p):
 @cython.wraparound(False)
 def sound_speed_t_exact(double sa, double t, double p):
     '''
+def sound_speed_t_exact(double sa, double t, double p):
     ! Calculates the sound speed of seawater
     !
     ! sa     : Absolute Salinity                               [g/kg]
@@ -665,6 +650,7 @@ def sound_speed_t_exact(double sa, double t, double p):
 @cython.wraparound(False)
 def specvol_anom(double sa, double ct, double p):
     '''
+def specvol_anom(double sa, double ct, double p):
     !  Calculates specific volume anomaly of seawater using the computationally-
     !  efficient 48-term expression for density in terms of SA, CT and p
     !  (McDougall et al., 2011)
@@ -681,6 +667,7 @@ def specvol_anom(double sa, double ct, double p):
 @cython.wraparound(False)
 def specvol(double sa, double ct, double p):
     '''
+def specvol(double sa, double ct, double p):
     !  Calculates specific volume of seawater using the computationally-
     !  efficient 48-term expression for density in terms of SA, CT and p
     !  (McDougall et al., 2011)
@@ -697,6 +684,7 @@ def specvol(double sa, double ct, double p):
 @cython.wraparound(False)
 def specvol_sso_0_p(double p):
     '''
+def specvol_sso_0_p(double p):
     !  This function calculates specifc volume at the Standard Ocean Salinty,
     !  SSO, and at a Conservative Temperature of zero degrees C, as a function 
     !  of pressure, p, in dbar, using a streamlined version of the 48-term CT
@@ -713,6 +701,7 @@ def specvol_sso_0_p(double p):
 @cython.wraparound(False)
 def specvol_t_exact(double sa, double t, double p):
     '''
+def specvol_t_exact(double sa, double t, double p):
     ! Calculates the specific volume of seawater
     !
     ! sa     : Absolute Salinity                               [g/kg]
@@ -727,6 +716,7 @@ def specvol_t_exact(double sa, double t, double p):
 @cython.wraparound(False)
 def sp_from_sa_baltic(double sa, double lon, double lat):
     '''
+def sp_from_sa_baltic(double sa, double lon, double lat):
     ! For the Baltic Sea, calculates Practical Salinity with a value
     ! computed analytically from Absolute Salinity
     !
@@ -743,6 +733,7 @@ def sp_from_sa_baltic(double sa, double lon, double lat):
 @cython.wraparound(False)
 def sp_from_sa(double sa, double p, double lon, double lat):
     '''
+def sp_from_sa(double sa, double p, double lon, double lat):
     ! Calculates Practical salinity, sp, from Absolute salinity, sa  
     !
     ! sa     : Absolute Salinity                               [g/kg]
@@ -758,6 +749,7 @@ def sp_from_sa(double sa, double p, double lon, double lat):
 @cython.wraparound(False)
 def sp_from_sr(double sr):
     '''
+def sp_from_sr(double sr):
     ! Calculates Practical Salinity, sp, from Reference Salinity, sr. 
     !
     ! sr     : Reference Salinity                              [g/kg]
@@ -770,6 +762,7 @@ def sp_from_sr(double sr):
 @cython.wraparound(False)
 def sp_from_sstar(double sstar, double p,double lon,double lat):
     '''
+def sp_from_sstar(double sstar, double p,double lon,double lat):
     ! Calculates Practical Salinity, SP, from Preformed Salinity, Sstar. 
     !
     ! sstar  : Preformed Salinity                              [g/kg]
@@ -785,6 +778,7 @@ def sp_from_sstar(double sstar, double p,double lon,double lat):
 @cython.wraparound(False)
 def sr_from_sp(double sp):
     '''
+def sr_from_sp(double sp):
     ! Calculates Reference Salinity, SR, from Practical Salinity, SP. 
     !
     ! sp     : Practical Salinity                              [unitless]
@@ -797,6 +791,7 @@ def sr_from_sp(double sp):
 @cython.wraparound(False)
 def sstar_from_sa(double sa, double p, double lon, double lat):
     '''
+def sstar_from_sa(double sa, double p, double lon, double lat):
     ! Calculates Preformed Salinity, Sstar, from Absolute Salinity, SA. 
     !
     ! sa     : Absolute Salinity                               [g/kg]
@@ -812,6 +807,7 @@ def sstar_from_sa(double sa, double p, double lon, double lat):
 @cython.wraparound(False)
 def sstar_from_sp(double sp, double p, double lon, double lat):
     '''
+def sstar_from_sp(double sp, double p, double lon, double lat):
     ! Calculates Preformed Salinity, Sstar, from Practical Salinity, SP. 
     !
     ! sp     : Practical Salinity                              [unitless]
@@ -827,6 +823,7 @@ def sstar_from_sp(double sp, double p, double lon, double lat):
 @cython.wraparound(False)
 def t_freezing(double sa, double p, double saturation_fraction):
     '''
+def t_freezing(double sa, double p, double saturation_fraction):
     ! Calculates the in-situ temperature at which of seawater freezes 
     ! from Absolute Salinity and pressure.
     !
@@ -842,6 +839,7 @@ def t_freezing(double sa, double p, double saturation_fraction):
 @cython.wraparound(False)
 def t_from_ct(double sa, double ct, double p):
     '''
+def t_from_ct(double sa, double ct, double p):
     ! Calculates in-situ temperature from Conservative Temperature of seawater  
     !
     ! sa      : Absolute Salinity                              [g/kg]
