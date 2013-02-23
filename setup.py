@@ -1,7 +1,9 @@
 try:
-    from setuptools import setup
+    from setuptools import setup, find_packages
+    packages = find_packages()
 except ImportError:
     from distutils import setup
+    packages = ['pygsw','pygsw/test']
 from distutils.extension import Extension
 
 import numpy as np
@@ -33,7 +35,7 @@ setup(name = 'pygsw',
         url='https://github.com/lukecampbell/pygsw/',
         ext_modules=[gsw_extension],
         classifiers=classifiers.split('\n'),
-        packages=['pygsw'],
+        packages=packages,
         keywords=['oceanography', 'seawater'],
         setup_requires=['setuptools_cython'],
         )
