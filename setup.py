@@ -24,11 +24,10 @@ Topic :: Scientific/Engineering
 Topic :: Education
 Topic :: Software Development :: Libraries :: Python Modules'''
 setup(name = 'pygsw', 
-        version='0.0.2',
+        version='0.0.1',
         description='Python bindings for the TEOS-10 V3.0 GSW Oceanographic Toolbox in C',
         long_description=open('README.md').read(),
-        license=open('LICENSE.txt').read(),
-        package_data={'':['README.md','LICENSE.txt']},
+        license='LICENSE.txt',
         author='Luke Campbell',
         author_email='luke.s.campbell@gmail.com',
         url='https://github.com/lukecampbell/pygsw/',
