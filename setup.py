@@ -26,7 +26,7 @@ Topic :: Scientific/Engineering
 Topic :: Education
 Topic :: Software Development :: Libraries :: Python Modules'''
 setup(name = 'pygsw', 
-        version='0.0.4',
+        version='0.0.5',
         description='Python bindings for the TEOS-10 V3.0 GSW Oceanographic Toolbox in C',
         long_description=open('README.txt').read(),
         license='LICENSE.txt',
