@@ -196,53 +196,101 @@ saturation_fraction = 0.5e0
 import unittest
 
 import pygsw as gsw
+from pygsw import vectors as gswv
 
 class PyGSWTest(unittest.TestCase):
+    def test_vector_values(self):
+        self.assertTrue( self.validate('gswv.alpha', C.alpha_ca,gswv.alpha(sa,ct,p),2.62460550806784356e-4))
+        self.assertTrue( self.validate("gswv.sa_from_sp", C.sa_from_sp_ca, gswv.sa_from_sp(sp,p,lon,lat), 35.671358392019094e0))
+        self.assertTrue( self.validate("gswv.sstar_from_sp", C.sstar_from_sp_ca, gswv.sstar_from_sp(sa,p,lon,lat), 35.866946753006239e0))
+        self.assertTrue( self.validate("gswv.ct_from_t", C.ct_from_t_ca, gswv.ct_from_t(sa,t,p),  14.930280459895560e0))
+        self.assertTrue( self.validate("gswv.deltasa_from_sp", C.deltasa_from_sp_ca, gswv.deltasa_from_sp(sp,p,lon,lat),  3.96067773336028495e-3))
+        self.assertTrue( self.validate("gswv.sr_from_sp", C.sr_from_sp_ca, gswv.sr_from_sp(sp),  35.667397714285734e0))
+        self.assertTrue( self.validate("gswv.sp_from_sr", C.sp_from_sr_ca, gswv.sp_from_sr(sr),  35.333387933015295e0))
+        self.assertTrue( self.validate("gswv.sp_from_sa", C.sp_from_sa_ca, gswv.sp_from_sa(sa,p,lon,lat), 35.528504019167094e0))
+        self.assertTrue( self.validate("gswv.sstar_from_sa", C.sstar_from_sa_ca, gswv.sstar_from_sa(sa,p,lon,lat), 35.694648791860907e0))
+        self.assertTrue( self.validate("gswv.sp_from_sstar", C.sp_from_sstar_ca, gswv.sp_from_sstar(sstar,p,lon,lat), 35.334761242083573e0))
+        self.assertTrue( self.validate("gswv.sa_from_sstar", C.sa_from_sstar_ca, gswv.sa_from_sstar(sstar,p,lon,lat), 35.505322027120805e0))
+        self.assertTrue( self.validate("gswv.pt_from_ct", C.pt_from_ct_ca, gswv.pt_from_ct(sa,ct), 20.023899375975017e0))
+        self.assertTrue( self.validate("gswv.t_from_ct", C.t_from_ct_ca, gswv.t_from_ct(sa,ct,p), 20.079820359223014e0))
+        self.assertTrue( self.validate("gswv.ct_from_pt", C.ct_from_pt_ca, gswv.ct_from_pt(sa,pt), 14.976021403957613e0))
+        self.assertTrue( self.validate("gswv.pt0_from_t", C.pt0_from_t_ca, gswv.pt0_from_t(sa,t,p),  14.954241363902305e0))
+        self.assertTrue( self.validate("gswv.pt_from_t", C.pt_from_t_ca, gswv.pt_from_t(sa,t,p,p_ref), 14.969381237883740e0))
+        self.assertTrue( self.validate("gswv.rho", C.rho_ca, gswv.rho(sa,ct,p), 1026.4562376198473e0))
+        self.assertTrue( self.validate("gswv.alpha", C.alpha_ca, gswv.alpha(sa,ct,p), 2.62460550806784356e-4))
+        self.assertTrue( self.validate("gswv.beta", C.beta_ca, gswv.beta(sa,ct,p), 7.29314455934463365e-4 ))
+        self.assertTrue( self.validate("gswv.specvol", C.specvol_ca, gswv.specvol(sa,ct,p), 9.74225654586897711e-4 ))
+        self.assertTrue( self.validate("gswv.specvol_anom", C.specvol_anom_ca, gswv.specvol_anom(sa,ct,p), 2.90948181201264571e-6 ))
+        self.assertTrue( self.validate("gswv.sound_speed", C.sound_speed_ca, gswv.sound_speed(sa,ct,p), 1527.2011773569989e0 ))
+        self.assertTrue( self.validate("gswv.internal_energy", C.internal_energy_ca, gswv.internal_energy(sa,ct,p), 79740.482561720783e0 ))
+        self.assertTrue( self.validate("gswv.enthalpy", C.enthalpy_ca, gswv.enthalpy(sa,ct,p), 82761.872939932495e0 ))
+        self.assertTrue( self.validate("gswv.dynamic_enthalpy", C.dynamic_enthalpy_ca, gswv.dynamic_enthalpy(sa,ct,p),  2924.5137975399025e0 ))
+        self.assertTrue( self.validate("gswv.ct_freezing", C.ct_freezing_ca, gswv.ct_freezing(sa,p,saturation_fraction), -2.1801450326174852e0))
+        self.assertTrue( self.validate("gswv.t_freezing", C.t_freezing_ca, gswv.t_freezing(sa,p,saturation_fraction), -2.1765521998023516e0))
+        self.assertTrue( self.validate("gswv.latentheat_melting", C.latentheat_melting_ca, gswv.latentheat_melting(sa,p), 329330.54839618353e0))
+        self.assertTrue( self.validate("gswv.latentheat_evap_ct", C.latentheat_evap_ct_ca, gswv.latentheat_evap_ct(sa,ct), 2450871.0228523901e0))
+        self.assertTrue( self.validate("gswv.latentheat_evap_t", C.latentheat_evap_t_ca, gswv.latentheat_evap_t(sa,t), 2462848.2895522709e0))
+        self.assertTrue( self.validate("gswv.rho_t_exact", C.rho_t_exact_ca, gswv.rho_t_exact(sa,t,p), 1027.7128170207150e0))
+        self.assertTrue( self.validate("gswv.pot_rho_t_exact", C.pot_rho_t_exact_ca, gswv.pot_rho_t_exact(sa,t,p,p_ref), 1026.8362655887486e0))
+        self.assertTrue( self.validate("gswv.alpha_wrt_t_exact", C.alpha_wrt_t_exact_ca, gswv.alpha_wrt_t_exact(sa,t,p), 2.19066952410728916e-4))
+        self.assertTrue( self.validate("gswv.beta_const_t_exact", C.beta_const_t_exact_ca, gswv.beta_const_t_exact(sa,t,p),  7.44744841648729426e-4))
+        self.assertTrue( self.validate("gswv.specvol_t_exact", C.specvol_t_exact_ca, gswv.specvol_t_exact(sa,t,p), 9.73034473676164815e-4))
+        self.assertTrue( self.validate("gswv.sound_speed_t_exact", C.sound_speed_t_exact_ca, gswv.sound_speed_t_exact(sa,t,p), 1512.2053940303056e0))
+        self.assertTrue( self.validate("gswv.kappa_t_exact", C.kappa_t_exact_ca, gswv.kappa_t_exact(sa,t,p), 4.25506953386609075e-010))
+        self.assertTrue( self.validate("gswv.enthalpy_t_exact", C.enthalpy_t_exact_ca, gswv.enthalpy_t_exact(sa,t,p), 62520.680485510929e0))
+        self.assertTrue( self.validate("gswv.entropy_t_exact", C.entropy_t_exact_ca, gswv.entropy_t_exact(sa,t,p), 212.30166821093002e0))
+        self.assertTrue( self.validate("gswv.cp_t_exact", C.cp_t_exact_ca, gswv.cp_t_exact(sa,t,p), 3982.7832563441461e0))
+        self.assertTrue( self.validate("gswv.delta_sa_ref", C.delta_sa_ref_ca, gswv.delta_sa_ref(p,lon,lat), 3.87660373016291727e-3))
+        self.assertTrue( self.validate("gswv.fdelta", C.fdelta_ca, gswv.fdelta(p,lon,lat), 1.49916256924158942e-004))
+        self.assertTrue( self.validate("gswv.sa_from_sp_baltic", C.sa_from_sp_ca, gswv.sa_from_sp_baltic(sp,long_bs,lat_bs) , 35.666154857142850e0))
+        self.assertTrue( self.validate("gswv.sp_from_sa_baltic", C.sp_from_sa_ca, gswv.sp_from_sa_baltic(sa,long_bs,lat_bs), 35.533769845749660e0))
+        
+
     def test_valid_values(self):
-        assert self.validate('gsw.alpha', C.alpha_ca,gsw.alpha(sa,ct,p),2.62460550806784356e-4)
-        assert self.validate("gsw.sa_from_sp", C.sa_from_sp_ca, gsw.sa_from_sp(sp,p,lon,lat), 35.671358392019094e0);
-        assert self.validate("gsw.sstar_from_sp", C.sstar_from_sp_ca, gsw.sstar_from_sp(sa,p,lon,lat), 35.866946753006239e0);
-        assert self.validate("gsw.ct_from_t", C.ct_from_t_ca, gsw.ct_from_t(sa,t,p),  14.930280459895560e0);
-        assert self.validate("gsw.deltasa_from_sp", C.deltasa_from_sp_ca, gsw.deltasa_from_sp(sp,p,lon,lat),  3.96067773336028495e-3);
-        assert self.validate("gsw.sr_from_sp", C.sr_from_sp_ca, gsw.sr_from_sp(sp),  35.667397714285734e0);
-        assert self.validate("gsw.sp_from_sr", C.sp_from_sr_ca, gsw.sp_from_sr(sr),  35.333387933015295e0);
-        assert self.validate("gsw.sp_from_sa", C.sp_from_sa_ca, gsw.sp_from_sa(sa,p,lon,lat), 35.528504019167094e0);
-        assert self.validate("gsw.sstar_from_sa", C.sstar_from_sa_ca, gsw.sstar_from_sa(sa,p,lon,lat), 35.694648791860907e0);
-        assert self.validate("gsw.sp_from_sstar", C.sp_from_sstar_ca, gsw.sp_from_sstar(sstar,p,lon,lat), 35.334761242083573e0);
-        assert self.validate("gsw.sa_from_sstar", C.sa_from_sstar_ca, gsw.sa_from_sstar(sstar,p,lon,lat), 35.505322027120805e0);
-        assert self.validate("gsw.pt_from_ct", C.pt_from_ct_ca, gsw.pt_from_ct(sa,ct), 20.023899375975017e0);
-        assert self.validate("gsw.t_from_ct", C.t_from_ct_ca, gsw.t_from_ct(sa,ct,p), 20.079820359223014e0);
-        assert self.validate("gsw.ct_from_pt", C.ct_from_pt_ca, gsw.ct_from_pt(sa,pt), 14.976021403957613e0);
-        assert self.validate("gsw.pt0_from_t", C.pt0_from_t_ca, gsw.pt0_from_t(sa,t,p),  14.954241363902305e0);
-        assert self.validate("gsw.pt_from_t", C.pt_from_t_ca, gsw.pt_from_t(sa,t,p,p_ref), 14.969381237883740e0);
-        assert self.validate("gsw.rho", C.rho_ca, gsw.rho(sa,ct,p), 1026.4562376198473e0);
-        assert self.validate("gsw.alpha", C.alpha_ca, gsw.alpha(sa,ct,p), 2.62460550806784356e-4);
-        assert self.validate("gsw.beta", C.beta_ca, gsw.beta(sa,ct,p), 7.29314455934463365e-4 );
-        assert self.validate("gsw.specvol", C.specvol_ca, gsw.specvol(sa,ct,p), 9.74225654586897711e-4 );
-        assert self.validate("gsw.specvol_anom", C.specvol_anom_ca, gsw.specvol_anom(sa,ct,p), 2.90948181201264571e-6 );
-        assert self.validate("gsw.sound_speed", C.sound_speed_ca, gsw.sound_speed(sa,ct,p), 1527.2011773569989e0 );
-        assert self.validate("gsw.internal_energy", C.internal_energy_ca, gsw.internal_energy(sa,ct,p), 79740.482561720783e0 );
-        assert self.validate("gsw.enthalpy", C.enthalpy_ca, gsw.enthalpy(sa,ct,p), 82761.872939932495e0 );
-        assert self.validate("gsw.dynamic_enthalpy", C.dynamic_enthalpy_ca, gsw.dynamic_enthalpy(sa,ct,p),  2924.5137975399025e0 );
-        assert self.validate("gsw.ct_freezing", C.ct_freezing_ca, gsw.ct_freezing(sa,p,saturation_fraction), -2.1801450326174852e0);
-        assert self.validate("gsw.t_freezing", C.t_freezing_ca, gsw.t_freezing(sa,p,saturation_fraction), -2.1765521998023516e0);
-        assert self.validate("gsw.latentheat_melting", C.latentheat_melting_ca, gsw.latentheat_melting(sa,p), 329330.54839618353e0);
-        assert self.validate("gsw.latentheat_evap_ct", C.latentheat_evap_ct_ca, gsw.latentheat_evap_ct(sa,ct), 2450871.0228523901e0);
-        assert self.validate("gsw.latentheat_evap_t", C.latentheat_evap_t_ca, gsw.latentheat_evap_t(sa,t), 2462848.2895522709e0);
-        assert self.validate("gsw.rho_t_exact", C.rho_t_exact_ca, gsw.rho_t_exact(sa,t,p), 1027.7128170207150e0);
-        assert self.validate("gsw.pot_rho_t_exact", C.pot_rho_t_exact_ca, gsw.pot_rho_t_exact(sa,t,p,p_ref), 1026.8362655887486e0);
-        assert self.validate("gsw.alpha_wrt_t_exact", C.alpha_wrt_t_exact_ca, gsw.alpha_wrt_t_exact(sa,t,p), 2.19066952410728916e-4);
-        assert self.validate("gsw.beta_const_t_exact", C.beta_const_t_exact_ca, gsw.beta_const_t_exact(sa,t,p),  7.44744841648729426e-4);
-        assert self.validate("gsw.specvol_t_exact", C.specvol_t_exact_ca, gsw.specvol_t_exact(sa,t,p), 9.73034473676164815e-4);
-        assert self.validate("gsw.sound_speed_t_exact", C.sound_speed_t_exact_ca, gsw.sound_speed_t_exact(sa,t,p), 1512.2053940303056e0);
-        assert self.validate("gsw.kappa_t_exact", C.kappa_t_exact_ca, gsw.kappa_t_exact(sa,t,p), 4.25506953386609075e-010);
-        assert self.validate("gsw.enthalpy_t_exact", C.enthalpy_t_exact_ca, gsw.enthalpy_t_exact(sa,t,p), 62520.680485510929e0);
-        assert self.validate("gsw.entropy_t_exact", C.entropy_t_exact_ca, gsw.entropy_t_exact(sa,t,p), 212.30166821093002e0);
-        assert self.validate("gsw.cp_t_exact", C.cp_t_exact_ca, gsw.cp_t_exact(sa,t,p), 3982.7832563441461e0);
-        assert self.validate("gsw.delta_sa_ref", C.delta_sa_ref_ca, gsw.delta_sa_ref(p,lon,lat), 3.87660373016291727e-3);
-        assert self.validate("gsw.fdelta", C.fdelta_ca, gsw.fdelta(p,lon,lat), 1.49916256924158942e-004);
-        assert self.validate("gsw.sa_from_sp_baltic", C.sa_from_sp_ca, gsw.sa_from_sp_baltic(sp,long_bs,lat_bs) , 35.666154857142850e0);
-        assert self.validate("gsw.sp_from_sa_baltic", C.sp_from_sa_ca, gsw.sp_from_sa_baltic(sa,long_bs,lat_bs), 35.533769845749660e0);
+        self.assertTrue( self.validate('gsw.alpha', C.alpha_ca,gsw.alpha(sa,ct,p),2.62460550806784356e-4))
+        self.assertTrue( self.validate("gsw.sa_from_sp", C.sa_from_sp_ca, gsw.sa_from_sp(sp,p,lon,lat), 35.671358392019094e0))
+        self.assertTrue( self.validate("gsw.sstar_from_sp", C.sstar_from_sp_ca, gsw.sstar_from_sp(sa,p,lon,lat), 35.866946753006239e0))
+        self.assertTrue( self.validate("gsw.ct_from_t", C.ct_from_t_ca, gsw.ct_from_t(sa,t,p),  14.930280459895560e0))
+        self.assertTrue( self.validate("gsw.deltasa_from_sp", C.deltasa_from_sp_ca, gsw.deltasa_from_sp(sp,p,lon,lat),  3.96067773336028495e-3))
+        self.assertTrue( self.validate("gsw.sr_from_sp", C.sr_from_sp_ca, gsw.sr_from_sp(sp),  35.667397714285734e0))
+        self.assertTrue( self.validate("gsw.sp_from_sr", C.sp_from_sr_ca, gsw.sp_from_sr(sr),  35.333387933015295e0))
+        self.assertTrue( self.validate("gsw.sp_from_sa", C.sp_from_sa_ca, gsw.sp_from_sa(sa,p,lon,lat), 35.528504019167094e0))
+        self.assertTrue( self.validate("gsw.sstar_from_sa", C.sstar_from_sa_ca, gsw.sstar_from_sa(sa,p,lon,lat), 35.694648791860907e0))
+        self.assertTrue( self.validate("gsw.sp_from_sstar", C.sp_from_sstar_ca, gsw.sp_from_sstar(sstar,p,lon,lat), 35.334761242083573e0))
+        self.assertTrue( self.validate("gsw.sa_from_sstar", C.sa_from_sstar_ca, gsw.sa_from_sstar(sstar,p,lon,lat), 35.505322027120805e0))
+        self.assertTrue( self.validate("gsw.pt_from_ct", C.pt_from_ct_ca, gsw.pt_from_ct(sa,ct), 20.023899375975017e0))
+        self.assertTrue( self.validate("gsw.t_from_ct", C.t_from_ct_ca, gsw.t_from_ct(sa,ct,p), 20.079820359223014e0))
+        self.assertTrue( self.validate("gsw.ct_from_pt", C.ct_from_pt_ca, gsw.ct_from_pt(sa,pt), 14.976021403957613e0))
+        self.assertTrue( self.validate("gsw.pt0_from_t", C.pt0_from_t_ca, gsw.pt0_from_t(sa,t,p),  14.954241363902305e0))
+        self.assertTrue( self.validate("gsw.pt_from_t", C.pt_from_t_ca, gsw.pt_from_t(sa,t,p,p_ref), 14.969381237883740e0))
+        self.assertTrue( self.validate("gsw.rho", C.rho_ca, gsw.rho(sa,ct,p), 1026.4562376198473e0))
+        self.assertTrue( self.validate("gsw.alpha", C.alpha_ca, gsw.alpha(sa,ct,p), 2.62460550806784356e-4))
+        self.assertTrue( self.validate("gsw.beta", C.beta_ca, gsw.beta(sa,ct,p), 7.29314455934463365e-4 ))
+        self.assertTrue( self.validate("gsw.specvol", C.specvol_ca, gsw.specvol(sa,ct,p), 9.74225654586897711e-4 ))
+        self.assertTrue( self.validate("gsw.specvol_anom", C.specvol_anom_ca, gsw.specvol_anom(sa,ct,p), 2.90948181201264571e-6 ))
+        self.assertTrue( self.validate("gsw.sound_speed", C.sound_speed_ca, gsw.sound_speed(sa,ct,p), 1527.2011773569989e0 ))
+        self.assertTrue( self.validate("gsw.internal_energy", C.internal_energy_ca, gsw.internal_energy(sa,ct,p), 79740.482561720783e0 ))
+        self.assertTrue( self.validate("gsw.enthalpy", C.enthalpy_ca, gsw.enthalpy(sa,ct,p), 82761.872939932495e0 ))
+        self.assertTrue( self.validate("gsw.dynamic_enthalpy", C.dynamic_enthalpy_ca, gsw.dynamic_enthalpy(sa,ct,p),  2924.5137975399025e0 ))
+        self.assertTrue( self.validate("gsw.ct_freezing", C.ct_freezing_ca, gsw.ct_freezing(sa,p,saturation_fraction), -2.1801450326174852e0))
+        self.assertTrue( self.validate("gsw.t_freezing", C.t_freezing_ca, gsw.t_freezing(sa,p,saturation_fraction), -2.1765521998023516e0))
+        self.assertTrue( self.validate("gsw.latentheat_melting", C.latentheat_melting_ca, gsw.latentheat_melting(sa,p), 329330.54839618353e0))
+        self.assertTrue( self.validate("gsw.latentheat_evap_ct", C.latentheat_evap_ct_ca, gsw.latentheat_evap_ct(sa,ct), 2450871.0228523901e0))
+        self.assertTrue( self.validate("gsw.latentheat_evap_t", C.latentheat_evap_t_ca, gsw.latentheat_evap_t(sa,t), 2462848.2895522709e0))
+        self.assertTrue( self.validate("gsw.rho_t_exact", C.rho_t_exact_ca, gsw.rho_t_exact(sa,t,p), 1027.7128170207150e0))
+        self.assertTrue( self.validate("gsw.pot_rho_t_exact", C.pot_rho_t_exact_ca, gsw.pot_rho_t_exact(sa,t,p,p_ref), 1026.8362655887486e0))
+        self.assertTrue( self.validate("gsw.alpha_wrt_t_exact", C.alpha_wrt_t_exact_ca, gsw.alpha_wrt_t_exact(sa,t,p), 2.19066952410728916e-4))
+        self.assertTrue( self.validate("gsw.beta_const_t_exact", C.beta_const_t_exact_ca, gsw.beta_const_t_exact(sa,t,p),  7.44744841648729426e-4))
+        self.assertTrue( self.validate("gsw.specvol_t_exact", C.specvol_t_exact_ca, gsw.specvol_t_exact(sa,t,p), 9.73034473676164815e-4))
+        self.assertTrue( self.validate("gsw.sound_speed_t_exact", C.sound_speed_t_exact_ca, gsw.sound_speed_t_exact(sa,t,p), 1512.2053940303056e0))
+        self.assertTrue( self.validate("gsw.kappa_t_exact", C.kappa_t_exact_ca, gsw.kappa_t_exact(sa,t,p), 4.25506953386609075e-010))
+        self.assertTrue( self.validate("gsw.enthalpy_t_exact", C.enthalpy_t_exact_ca, gsw.enthalpy_t_exact(sa,t,p), 62520.680485510929e0))
+        self.assertTrue( self.validate("gsw.entropy_t_exact", C.entropy_t_exact_ca, gsw.entropy_t_exact(sa,t,p), 212.30166821093002e0))
+        self.assertTrue( self.validate("gsw.cp_t_exact", C.cp_t_exact_ca, gsw.cp_t_exact(sa,t,p), 3982.7832563441461e0))
+        self.assertTrue( self.validate("gsw.delta_sa_ref", C.delta_sa_ref_ca, gsw.delta_sa_ref(p,lon,lat), 3.87660373016291727e-3))
+        self.assertTrue( self.validate("gsw.fdelta", C.fdelta_ca, gsw.fdelta(p,lon,lat), 1.49916256924158942e-004))
+        self.assertTrue( self.validate("gsw.sa_from_sp_baltic", C.sa_from_sp_ca, gsw.sa_from_sp_baltic(sp,long_bs,lat_bs) , 35.666154857142850e0))
+        self.assertTrue( self.validate("gsw.sp_from_sa_baltic", C.sp_from_sa_ca, gsw.sp_from_sa_baltic(sa,long_bs,lat_bs), 35.533769845749660e0))
 
 
     def validate(self, name, acceptable, actual, expected):

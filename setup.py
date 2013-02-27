@@ -3,7 +3,7 @@ try:
     packages = find_packages()
 except ImportError:
     from distutils import setup
-    packages = ['pygsw','pygsw/test']
+    packages = ['pygsw','pygsw/test', 'pygsw/vectors']
 from distutils.extension import Extension
 
 import numpy as np
