@@ -194,6 +194,7 @@ lat_bs              = 60e0
 saturation_fraction = 0.5e0
 
 import unittest
+import numpy as np
 
 import pygsw as gsw
 from pygsw import vectors as gswv
@@ -299,6 +300,22 @@ class PyGSWTest(unittest.TestCase):
             return True
         print name, ' failed.'
         return False
+
+    def test_pracsal(self):
+
+        C = np.array([34.5487, 34.7275, 34.8605, 34.6810, 34.5680, 34.5600])
+        t = np.array([28.7856, 28.4329, 22.8103, 10.2600,  6.8863,  4.4036])
+        p = np.array([10, 50, 125, 250, 600, 1000])
+
+        output = gswv.sp_from_c(C,t,p)
+        check_values = np.array((20.009869599086951,
+                                 20.265511864874270,
+                                 22.981513062527689,
+                                 31.204503263727982,
+                                 34.032315787432829,
+                                 36.400308494388170))
+        np.testing.assert_array_almost_equal(output, check_values)
+        
 
 
 
