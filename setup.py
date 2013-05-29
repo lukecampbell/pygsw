@@ -14,7 +14,7 @@ import sys
 if 'setuptools.extension' in sys.modules:
     m = sys.modules['setuptools.extension']
     m.Extension.__dict__ = m._Extension.__dict__
-gsw_extension = Extension("pygsw.seawater", ["pygsw/seawater.pyx"], include_dirs=[np.get_include()], libraries=['gswteos-10'] )
+gsw_extension = Extension("pygsw.seawater", ["pygsw/seawater.pyx", "pygsw/sp_from_c.c"], include_dirs=[np.get_include(), "pygsw/"], libraries=['gswteos-10'] )
 pracsal_extension = Extension("pygsw.practical_salinity", ["pygsw/practical_salinity.pyx"], include_dirs=[np.get_include()])
 
 
@@ -27,7 +27,7 @@ Topic :: Scientific/Engineering
 Topic :: Education
 Topic :: Software Development :: Libraries :: Python Modules'''
 setup(name = 'pygsw', 
-        version='0.0.6',
+        version='0.0.7',
         description='Python bindings for the TEOS-10 V3.0 GSW Oceanographic Toolbox in C',
         long_description=open('README.txt').read(),
         license='LICENSE.txt',

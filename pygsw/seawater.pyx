@@ -66,6 +66,10 @@ cdef extern from "gswteos-10.h":
      double gsw_t_from_ct(double sa, double ct, double p)
      double gsw_xinterp1(double *x, double *y, int n, double x0)
 
+cdef extern from "sp_from_c.h":
+    double gsw_sp_from_c(double C, double t, double p)
+
+
 
 
 
@@ -849,4 +853,34 @@ def t_from_ct(double sa, double ct, double p):
     '''    
     return gsw_t_from_ct(sa,ct,p)
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
+def sp_from_c(double C, double t, double p):
+    '''
+def sp_from_c(double C, double t, double p):
+    Calculates Practical Salinity, SP, from conductivity, C, primarily
+    using the PSS-78 algorithm.  Note that the PSS-78 algorithm for Practical
+    Salinity is only valid in the range 2 < SP < 42.  If the PSS-78 algorithm
+    produces a Practical Salinity that is less than 2 then the Practical
+    Salinity is recalculated with a modified form of the Hill et al. (1986)
+    formula. The modification of the Hill et al. (1986) expression is to ensure
+    that it is exactly consistent with PSS-78 at SP = 2.  Note that the input
+    values of conductivity need to be in units of mS/cm (not S/m).
+
+    Parameters
+    ----------
+    C : array
+        conductivity [mS cm :sup:`-1`]
+    t : array
+        in-situ temperature [:math:`^\circ` C (ITS-90)]
+    p : array
+        sea pressure [dbar]
+        (i.e. absolute pressure - 10.1325 dbar)
+
+    Returns
+    -------
+    SP : array
+         Practical Salinity [psu (PSS-78), unitless]
+    '''    
+    return gsw_sp_from_c(C,t,p)
 

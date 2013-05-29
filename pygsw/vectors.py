@@ -85,7 +85,7 @@ specvol_sso_0_p = np.vectorize(lambda p : gsw.specvol_sso_0_p(p))
 
 specvol_t_exact = np.vectorize(lambda sa,t,p : gsw.specvol_t_exact(sa,t,p))
 
-sp_from_c = np.vectorize(lambda C,t,p : pracsal.SP_from_C(C,t,p))
+sp_from_c = np.vectorize(lambda C,t,p : gsw.sp_from_c(C,t,p))
 
 sp_from_sa_baltic = np.vectorize(lambda sa,lon,lat : gsw.sp_from_sa_baltic(sa,lon,lat))
 
