@@ -1,6 +1,6 @@
 #include <math.h>
 #include <stdio.h>
-#include "sp_from_c.h"
+#include "pygsw.h"
 
 #ifndef NAN
 #define NAN 0.0/0.0

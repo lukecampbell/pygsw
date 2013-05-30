@@ -1,4 +1,4 @@
 *.swp
 *.c
-!pygsw/sp_from_c.c
+!pygsw/src/*
 *pyc

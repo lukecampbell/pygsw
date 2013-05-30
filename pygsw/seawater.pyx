@@ -66,11 +66,8 @@ cdef extern from "gswteos-10.h":
      double gsw_t_from_ct(double sa, double ct, double p)
      double gsw_xinterp1(double *x, double *y, int n, double x0)
 
-cdef extern from "sp_from_c.h":
+cdef extern from "pygsw.h":
     double gsw_sp_from_c(double C, double t, double p)
-
-
-
 
 
 @cython.boundscheck(False)

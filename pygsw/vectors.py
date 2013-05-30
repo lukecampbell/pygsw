@@ -1,5 +1,6 @@
 
 import seawater as gsw
+import ctd 
 import practical_salinity as pracsal
 import numpy as np
 
@@ -105,4 +106,4 @@ t_freezing = np.vectorize(lambda sa,p,saturation_fraction : gsw.t_freezing(sa,p,
 
 t_from_ct = np.vectorize(lambda sa,ct,p : gsw.t_from_ct(sa,ct,p))
 
-
+ctd_density = np.vectorize(lambda sp, t, p, lat, lon : ctd.density(sp,t,p,lat,lon))

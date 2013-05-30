@@ -1,4 +1,4 @@
 include *.txt
 include *.md
-include pygsw/sp_from_c.h
-include pygsw/sp_from_c.c
+include pygsw/*.h
+include pygsw/src/*
